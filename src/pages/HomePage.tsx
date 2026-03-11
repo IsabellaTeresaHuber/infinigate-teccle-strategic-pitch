@@ -1,138 +1,220 @@
-// Home page of the app.
-// Currently a demo placeholder "please wait" screen.
-// Replace this file with your actual app UI. Do not delete it to use some other file as homepage. Simply replace the entire contents of this file.
-
-import { useEffect, useMemo, useState } from 'react'
-import { Sparkles } from 'lucide-react'
-
-import { ThemeToggle } from '@/components/ThemeToggle'
-import { HAS_TEMPLATE_DEMO, TemplateDemo } from '@/components/TemplateDemo'
-import { Button } from '@/components/ui/button'
-import { Toaster, toast } from '@/components/ui/sonner'
-
-function formatDuration(ms: number): string {
-  const total = Math.max(0, Math.floor(ms / 1000))
-  const m = Math.floor(total / 60)
-  const s = total % 60
-  return `${m}:${s.toString().padStart(2, '0')}`
-}
-
+import React from 'react';
+import { motion } from 'framer-motion';
+import { 
+  Shield, 
+  Zap, 
+  Globe, 
+  Lock, 
+  TrendingUp, 
+  Users, 
+  Rocket, 
+  Server,
+  Cloud,
+  CheckCircle2,
+  ArrowRight
+} from 'lucide-react';
+import { ThemeToggle } from '@/components/ThemeToggle';
+import { SectionHeader } from '@/components/PitchDeck/SectionHeader';
+import { FeatureCard } from '@/components/PitchDeck/FeatureCard';
+import { ContactForm } from '@/components/PitchDeck/ContactForm';
+import { Button } from '@/components/ui/button';
+import { Toaster } from '@/components/ui/sonner';
 export function HomePage() {
-  const [coins, setCoins] = useState(0)
-  const [isRunning, setIsRunning] = useState(false)
-  const [startedAt, setStartedAt] = useState<number | null>(null)
-  const [elapsedMs, setElapsedMs] = useState(0)
-
-  useEffect(() => {
-    if (!isRunning || startedAt === null) return
-
-    const t = setInterval(() => {
-      setElapsedMs(Date.now() - startedAt)
-    }, 250)
-
-    return () => clearInterval(t)
-  }, [isRunning, startedAt])
-
-  const formatted = useMemo(() => formatDuration(elapsedMs), [elapsedMs])
-
-  const onPleaseWait = () => {
-    setCoins((c) => c + 1)
-
-    if (!isRunning) {
-      // Resume from the current elapsed time
-      setStartedAt(Date.now() - elapsedMs)
-      setIsRunning(true)
-      toast.success('Building your app…', {
-        description: "Hang tight — we're setting everything up.",
-      })
-      return
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2 }
     }
-
-    setIsRunning(false)
-    toast.info('Still working…', {
-      description: 'You can come back in a moment.',
-    })
-  }
-
-  const onReset = () => {
-    setCoins(0)
-    setIsRunning(false)
-    setStartedAt(null)
-    setElapsedMs(0)
-    toast('Reset complete')
-  }
-
-  const onAddCoin = () => {
-    setCoins((c) => c + 1)
-    toast('Coin added')
-  }
-
+  };
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background text-foreground p-4 overflow-hidden relative">
+    <div className="min-h-screen bg-background text-foreground selection:bg-cloudflare/30">
       <ThemeToggle />
-      <div className="absolute inset-0 bg-gradient-rainbow opacity-10 dark:opacity-20 pointer-events-none" />
-
-      <div className="text-center space-y-8 relative z-10 animate-fade-in w-full">
-        <div className="flex justify-center">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-primary flex items-center justify-center shadow-primary floating">
-            <Sparkles className="w-8 h-8 text-white rotating" />
+      <Toaster richColors position="top-center" />
+      {/* Hero Section */}
+      <section className="relative min-h-[90svh] flex items-center justify-center overflow-hidden border-b border-border/10">
+        <div className="absolute inset-0 bg-gradient-to-b from-infinigate/5 to-cloudflare/5 pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-20%,rgba(243,128,32,0.1),transparent_70%)]" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center space-y-8"
+          >
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <span className="text-2xl font-black text-infinigate tracking-tighter">INFINIGATE</span>
+              <div className="h-6 w-px bg-border/50" />
+              <span className="text-2xl font-black text-cloudflare tracking-tighter">CLOUDFLARE</span>
+            </div>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[0.9] text-balance">
+              Strategic Growth for <br />
+              <span className="text-gradient">teccle motion</span>
+            </h1>
+            <p className="max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground text-pretty font-medium">
+              Empowering teccle motion to lead the cybersecurity landscape through the Infinigate x Cloudflare strategic partnership.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+              <Button size="lg" className="bg-gradient-brand hover:opacity-90 text-white font-bold h-14 px-8 rounded-xl shadow-glow" asChild>
+                <a href="#opportunity">Explore the Opportunity</a>
+              </Button>
+              <Button size="lg" variant="outline" className="h-14 px-8 rounded-xl border-border/50" asChild>
+                <a href="#contact">Contact Support</a>
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+      {/* The Cloudflare Advantage */}
+      <section id="opportunity" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+        <SectionHeader 
+          badge="Market Leading Technology"
+          title="The Cloudflare Advantage"
+          subtitle="Cloudflare protects and accelerates any Internet-facing application with a global connectivity cloud."
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <FeatureCard 
+            icon={Shield}
+            index={0}
+            title="Zero Trust Services"
+            description="Replace legacy VPNs with a faster, safer identity-based access model."
+          />
+          <FeatureCard 
+            icon={Zap}
+            index={1}
+            title="WAF & Application Security"
+            description="Enterprise-grade protection against DDoS, bots, and automated attacks."
+          />
+          <FeatureCard 
+            icon={Globe}
+            index={2}
+            title="Global Edge Network"
+            description="Deliver content faster from a massive global network spanning 300+ cities."
+          />
+          <FeatureCard 
+            icon={Cloud}
+            index={3}
+            title="Connectivity Cloud"
+            description="Simplify hybrid and multi-cloud environments with a unified control plane."
+          />
+        </div>
+      </section>
+      {/* Why Teccle Motion? */}
+      <section className="bg-secondary/30 border-y border-border/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="space-y-8"
+            >
+              <SectionHeader 
+                align="left"
+                title="The Reseller Opportunity"
+                subtitle="Transform your business model from transactional hardware to high-margin recursive cloud security."
+              />
+              <ul className="space-y-4">
+                {[
+                  "Recurring revenue with high customer retention.",
+                  "Consolidate multiple vendors into one platform.",
+                  "Fast implementation and time-to-value.",
+                  "Unrivaled brand recognition in the MSP space."
+                ].map((item, i) => (
+                  <li key={i} className="flex items-center gap-3 text-lg font-medium">
+                    <CheckCircle2 className="text-cloudflare w-6 h-6 flex-shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="relative aspect-square md:aspect-video rounded-3xl overflow-hidden shadow-2xl bg-gradient-brand"
+            >
+              <div className="absolute inset-0 flex items-center justify-center p-12 text-center text-white">
+                <div className="space-y-6">
+                  <TrendingUp className="w-20 h-20 mx-auto opacity-80" />
+                  <h3 className="text-3xl font-bold">Accelerate Growth</h3>
+                  <p className="text-lg opacity-90 max-w-sm">Join the ecosystem where Infinigate provides the technical backbone for teccle motion.</p>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
-
-        <div className="space-y-3">
-          <h1 className="text-5xl md:text-7xl font-display font-bold text-balance leading-tight">
-            Creating your <span className="text-gradient">app</span>
-          </h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto text-pretty">
-            Your application would be ready soon.
-          </p>
+      </section>
+      {/* Infinigate Edge */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+        <SectionHeader 
+          badge="Distribution Excellence"
+          title="The Infinigate Edge"
+          subtitle="We don't just ship boxes. We enable your technical and commercial success."
+        />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <FeatureCard 
+            icon={Rocket}
+            title="Technical Enablement"
+            description="Deep-dive workshops and pre-sales engineering support from Infinigate experts."
+          />
+          <FeatureCard 
+            icon={Users}
+            title="Strategic Marketing"
+            description="Co-branded campaigns and lead generation support for teccle motion."
+          />
+          <FeatureCard 
+            icon={Lock}
+            title="Consolidated Billing"
+            description="Streamlined procurement and financial services through our partner portal."
+          />
         </div>
-
-        {HAS_TEMPLATE_DEMO ? (
-          <div className="max-w-5xl mx-auto text-left">
-            <TemplateDemo />
+      </section>
+      {/* Contact Section */}
+      <section id="contact" className="relative py-24 md:py-32 overflow-hidden bg-foreground text-background">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(227,6,19,0.1),transparent_50%)]" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            <div>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-8 leading-tight">
+                Let's move <br />
+                <span className="text-cloudflare">teccle motion</span> <br />
+                forward.
+              </h2>
+              <p className="text-xl text-muted-foreground mb-12 max-w-md">
+                Schedule a discovery session with the Infinigate Cloudflare team to begin your onboarding journey.
+              </p>
+              <div className="space-y-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
+                    <CheckCircle2 className="text-cloudflare" />
+                  </div>
+                  <span className="text-lg font-medium">Free Partner Onboarding</span>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
+                    <CheckCircle2 className="text-cloudflare" />
+                  </div>
+                  <span className="text-lg font-medium">Marketing Resource Access</span>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white rounded-4xl p-8 sm:p-12 shadow-2xl text-foreground">
+              <ContactForm />
+            </div>
           </div>
-        ) : (
-          <>
-            <div className="flex justify-center gap-4">
-              <Button
-                size="lg"
-                onClick={onPleaseWait}
-                className="btn-gradient px-8 py-4 text-lg font-semibold hover:-translate-y-0.5 transition-all duration-200"
-                aria-live="polite"
-              >
-                Please Wait
-              </Button>
-            </div>
-
-            <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground">
-              <div>
-                Time elapsed:{' '}
-                <span className="font-medium tabular-nums text-foreground">{formatted}</span>
-              </div>
-              <div>
-                Coins:{' '}
-                <span className="font-medium tabular-nums text-foreground">{coins}</span>
-              </div>
-            </div>
-
-            <div className="flex justify-center gap-2">
-              <Button variant="outline" size="sm" onClick={onReset}>
-                Reset
-              </Button>
-              <Button variant="outline" size="sm" onClick={onAddCoin}>
-                Add Coin
-              </Button>
-            </div>
-          </>
-        )}
-      </div>
-
-      <footer className="absolute bottom-8 text-center text-muted-foreground/80">
-        <p>Powered by Cloudflare</p>
+        </div>
+      </section>
+      <footer className="py-12 border-t border-border/10 text-center text-muted-foreground text-sm">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-4">
+            <span className="font-bold text-infinigate">INFINIGATE</span>
+            <span className="text-border">|</span>
+            <span className="font-bold text-cloudflare">CLOUDFLARE</span>
+          </div>
+          <p>© {new Date().getFullYear()} Infinigate Holding AG. All rights reserved.</p>
+        </div>
       </footer>
-
-      <Toaster richColors closeButton />
     </div>
-  )
+  );
 }

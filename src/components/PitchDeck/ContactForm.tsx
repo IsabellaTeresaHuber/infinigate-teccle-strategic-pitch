@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -17,17 +17,17 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { api } from '@/lib/api-client';
+import type { CreateLeadPayload } from '@shared/types';
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name is required" }),
   email: z.string().email({ message: "Invalid email address" }),
   role: z.string().min(2, { message: "Role is required" }),
   message: z.string().min(10, { message: "Please tell us a bit more" }),
 });
-type FormValues = z.infer<typeof formSchema>;
 export function ContactForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const form = useForm<FormValues>({
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
@@ -36,7 +36,7 @@ export function ContactForm() {
       message: "",
     },
   });
-  const onSubmit = useCallback(async (values: FormValues) => {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     try {
       await api<any>('/api/leads', {
@@ -54,11 +54,7 @@ export function ContactForm() {
     } finally {
       setIsLoading(false);
     }
-  }, []);
-  const handleReset = useCallback(() => {
-    setIsSubmitted(false);
-    form.reset();
-  }, [form]);
+  }
   return (
     <div className="relative">
       <AnimatePresence mode="wait">
@@ -160,10 +156,10 @@ export function ContactForm() {
               <CheckCircle2 className="w-10 h-10 text-green-600" />
             </div>
             <h3 className="text-2xl font-bold mb-4">Request Received!</h3>
-            <p className="text-muted-foreground mb-8 text-pretty max-w-sm">
+            <p className="text-muted-foreground mb-8">
               Thank you for your interest. A dedicated partner manager from Infinigate will reach out to teccle motion within 24 hours.
             </p>
-            <Button variant="outline" onClick={handleReset}>
+            <Button variant="outline" onClick={() => setIsSubmitted(false)}>
               Send another message
             </Button>
           </motion.div>
