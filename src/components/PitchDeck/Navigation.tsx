@@ -7,6 +7,7 @@ const navLinks = [
   { name: 'Portfolio', href: '#portfolio' },
   { name: 'Opportunity', href: '#opportunity' },
   { name: 'Partnership', href: '#partnership' },
+  { name: 'AI Future', href: '#ai-future' },
   { name: 'Teams', href: '#teams' },
   { name: 'Contact', href: '#contact' },
 ];
@@ -53,7 +54,7 @@ export function Navigation() {
               className="bg-gradient-brand text-white font-bold rounded-lg shadow-glow"
               asChild
             >
-              <a href="#contact">Get Started</a>
+              <a href="#contact">Join PowerUP</a>
             </Button>
           </div>
           {/* Mobile Toggle */}
@@ -90,7 +91,7 @@ export function Navigation() {
                 asChild
                 onClick={() => setMobileMenuOpen(false)}
               >
-                <a href="#contact">Get Started</a>
+                <a href="#contact">Join PowerUP</a>
               </Button>
             </div>
           </motion.div>

@@ -16,6 +16,8 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { SectionHeader } from '@/components/PitchDeck/SectionHeader';
 import { FeatureCard } from '@/components/PitchDeck/FeatureCard';
 import { ContactForm } from '@/components/PitchDeck/ContactForm';
+import { AISection } from '@/components/PitchDeck/AISection';
+import { CTABanner } from '@/components/PitchDeck/CTABanner';
 import { PortfolioShowcase } from '@/components/PitchDeck/PortfolioShowcase';
 import { ComparisonTable } from '@/components/PitchDeck/ComparisonTable';
 import { PartnerProgram } from '@/components/PitchDeck/PartnerProgram';
@@ -54,7 +56,7 @@ export function HomePage() {
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
               <Button size="lg" className="bg-gradient-brand hover:opacity-90 text-white font-bold h-14 px-8 rounded-xl shadow-glow transition-transform hover:scale-105" asChild>
-                <a href="#portfolio">Explore the Portfolio</a>
+                <a href="#contact">Join PowerUP & Start Selling AI</a>
               </Button>
               <Button size="lg" variant="outline" className="h-14 px-8 rounded-xl border-border/50 hover:bg-accent/50" asChild>
                 <a href="#contact">Contact Support</a>
@@ -129,6 +131,8 @@ export function HomePage() {
           </div>
         </div>
       </section>
+      {/* AI Section */}
+      <AISection />
       {/* Infinigate Edge */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
         <div className="flex flex-col items-center mb-16 text-center">
@@ -160,6 +164,8 @@ export function HomePage() {
       </section>
       {/* Team & Partnership Section */}
       <TeamSection />
+      {/* CTA Banner Section */}
+      <CTABanner />
       {/* Contact Section */}
       <section id="contact" className="relative py-24 md:py-32 overflow-hidden bg-foreground text-background scroll-mt-20">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(227,6,19,0.1),transparent_50%)]" />
