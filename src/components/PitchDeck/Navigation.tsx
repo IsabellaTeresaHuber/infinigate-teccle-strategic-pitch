@@ -24,9 +24,9 @@ export function Navigation() {
   return (
     <nav
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b",
-        isScrolled 
-          ? "bg-background/80 backdrop-blur-md border-border py-3 shadow-sm" 
+        "fixed top-0 left-0 right-0 z-[100] transition-all duration-300 border-b",
+        isScrolled
+          ? "bg-background/80 backdrop-blur-lg border-border py-3 shadow-sm"
           : "bg-transparent border-transparent py-5"
       )}
     >
@@ -49,18 +49,19 @@ export function Navigation() {
                 {link.name}
               </a>
             ))}
-            <Button 
-              size="sm" 
-              className="bg-gradient-brand text-white font-bold rounded-lg shadow-glow"
+            <Button
+              size="sm"
+              className="bg-gradient-brand text-white font-bold rounded-lg shadow-glow hover:scale-105 transition-transform"
               asChild
             >
               <a href="#contact">Join PowerUP</a>
             </Button>
           </div>
           {/* Mobile Toggle */}
-          <button 
-            className="md:hidden p-2 text-foreground"
+          <button
+            className="md:hidden p-2 text-foreground focus:outline-none"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
           >
             {mobileMenuOpen ? <X /> : <Menu />}
           </button>
@@ -70,29 +71,31 @@ export function Navigation() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-background border-b border-border overflow-hidden"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-border shadow-xl overflow-hidden"
           >
-            <div className="flex flex-col p-4 gap-4">
+            <div className="flex flex-col p-6 gap-2">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-lg font-bold text-foreground/80 hover:text-cloudflare p-2"
+                  className="text-lg font-bold text-foreground/80 hover:text-cloudflare py-3 border-b border-border/50 last:border-none"
                 >
                   {link.name}
                 </a>
               ))}
-              <Button 
-                className="bg-gradient-brand text-white font-bold w-full"
-                asChild
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <a href="#contact">Join PowerUP</a>
-              </Button>
+              <div className="pt-4">
+                <Button
+                  className="bg-gradient-brand text-white font-bold w-full h-12 shadow-glow"
+                  asChild
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <a href="#contact">Join PowerUP</a>
+                </Button>
+              </div>
             </div>
           </motion.div>
         )}
