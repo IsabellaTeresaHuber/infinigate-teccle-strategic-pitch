@@ -18,6 +18,7 @@ import { ContactForm } from '@/components/PitchDeck/ContactForm';
 import { PortfolioShowcase } from '@/components/PitchDeck/PortfolioShowcase';
 import { ComparisonTable } from '@/components/PitchDeck/ComparisonTable';
 import { PartnerProgram } from '@/components/PitchDeck/PartnerProgram';
+import { TeamSection } from '@/components/PitchDeck/TeamSection';
 import { Button } from '@/components/ui/button';
 import { Toaster } from '@/components/ui/sonner';
 import { Badge } from '@/components/ui/badge';
@@ -155,6 +156,8 @@ export function HomePage() {
           />
         </div>
       </section>
+      {/* Team & Partnership Section */}
+      <TeamSection />
       {/* Contact Section */}
       <section id="contact" className="relative py-24 md:py-32 overflow-hidden bg-foreground text-background scroll-mt-20">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(227,6,19,0.1),transparent_50%)]" />
