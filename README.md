@@ -2,7 +2,7 @@
 
 A production-ready full-stack application template featuring a React frontend with Shadcn UI and Tailwind CSS, powered by Cloudflare Workers backend using Hono and Durable Objects. This template includes a demo chat application with user management, chat boards, and real-time messaging, demonstrating stateful storage, pagination, CRUD operations, and responsive design.
 
-**[cloudflarebutton]**
+**[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/IsabellaTeresaHuber/infinigate-x-cloudflare-strategic-pitch-for-teccle-motion)**
 
 ## ✨ Key Features
 
@@ -98,7 +98,7 @@ wrangler deploy
 
 **Custom Domain**: Edit `wrangler.jsonc` → `wrangler deploy --env production`.
 
-**[cloudflarebutton]**
+**[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/IsabellaTeresaHuber/infinigate-x-cloudflare-strategic-pitch-for-teccle-motion)**
 
 **Notes**:
 - Free tier supports Durable Objects (SQLite).
